@@ -1,0 +1,4 @@
+env.php
+
+logs/access.log
+logs/errors.log
