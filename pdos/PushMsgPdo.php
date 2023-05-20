@@ -1,6 +1,40 @@
 <?php
 
 // 다이어리 초대 & 수락
+
+function sendDiaryFriend($data){
+    $user = $data['user'];
+    $tokenIOS = array();
+    $tokenAOS = array();
+    $receivename = ''; $sendname = ''; $usercode = ''; $diaryname = '';
+
+
+
+    foreach($user as $i=>$value){
+        if($data['userCode']==$user[$i]['code']){
+            $receivename = $user[$i]['name'];
+            $diaryname = $user[$i]['diaryName'];
+            if(codeToDeviceType($user[$i]['status']/100)=="Android") array_push($tokenAOS,$user[$i]['token']);
+            else array_push($tokenIOS,$user[$i]['token']);
+        }
+        else{
+            $sendname = $user[$i]['name'];
+            $usercode = $user[$i]['code'];
+        }
+    }
+
+    $NotificationArray= array();
+    $NotificationArray['body'] = $sendname."님(".$usercode.")이 ".$diaryname."에 초대합니다:)";
+    $NotificationArray['title'] = "To. ".$receivename."님";
+    $NotificationArray['sound'] = 'default';
+    $NotificationArray['type'] = 'addDiaryFriend';
+    $dataArray = array();
+    $dataArray["data"] = (int)$data['pathVar'];
+
+    sendFcm($tokenIOS, $NotificationArray,$dataArray,"IOS");
+    sendFcm($tokenAOS, $NotificationArray,$dataArray,"Android");
+}
+
 function acceptDiaryFriend($data){
     $user = $data['user'];
     $tokenIOS = array();
@@ -33,37 +67,6 @@ function acceptDiaryFriend($data){
 
     $NotificationArray = null;
     $dataArray = null;
-}
-
-function sendDiaryFriend($data){
-    $user = $data['user'];
-    $tokenIOS = array();
-    $tokenAOS = array();
-    $receivename = ''; $sendname = ''; $usercode = ''; $diaryname = '';
-
-    foreach($user as $i=>$value){
-        if($data['userCode']==$user[$i]['code']){
-            $receivename = $user[$i]['name'];
-            $diaryname = $user[$i]['diaryName'];
-            if(codeToDeviceType($user[$i]['status']/100)=="Android") array_push($tokenAOS,$user[$i]['token']);
-            else array_push($tokenIOS,$user[$i]['token']);
-        }
-        else{
-            $sendname = $user[$i]['name'];
-            $usercode = $user[$i]['code'];
-        }
-    }
-
-    $NotificationArray= array();
-    $NotificationArray['body'] = $sendname."님(".$usercode.")이 ".$diaryname."에 초대합니다:)";
-    $NotificationArray['title'] = "To. ".$receivename."님";
-    $NotificationArray['sound'] = 'default';
-    $NotificationArray['type'] = 'addDiaryFriend';
-    $dataArray = array();
-    $dataArray["data"] = (int)$data['pathVar'];
-
-    sendFcm($tokenIOS, $NotificationArray,$dataArray,"IOS");
-    sendFcm($tokenAOS, $NotificationArray,$dataArray,"Android");
 }
 
 function pushPost($data){

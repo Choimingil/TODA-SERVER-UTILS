@@ -14,3 +14,9 @@ function sendMail($data){
             </html>';
         mailFunction(MAIL_USER,MAIL_PW,$email,$title,$content,$content);
 }
+
+function sendError($data){
+    $title = $data['title'];
+    $content = $data['content'];
+    mailFunction(MAIL_USER,MAIL_PW,MY_EMAIL,$title,$content,$content);
+}

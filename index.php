@@ -18,6 +18,7 @@ error_reporting(E_ALL); ini_set("display_errors", 1);
 
 //Main Server API
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+    $r->addRoute('POST', '/mail/error', ['MailController', 'sendError']);                                               //오류 메일 발송
     $r->addRoute('POST', '/mail/pw', ['MailController', 'sendMail']);                                                   //7-2. 임시 비밀번호 발급 API
 
     $r->addRoute('POST', '/alarm/notification/ios', ['AlarmController', 'postTokenIOS']);                               // IOS 토큰 저장

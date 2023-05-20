@@ -15,3 +15,26 @@ function pdoSqlConnect()
         echo $e->getMessage();
     }
 }
+
+function execute(string $query, array $body): bool|array
+{
+    $pdo = pdoSqlConnect();
+    $st = $pdo->prepare($query);
+    $st->execute($body);
+    $st->setFetchMode(PDO::FETCH_ASSOC);
+    $res = $st->fetchAll();
+    $st = null;
+    $pdo = null;
+    return $res;
+}
+
+function lastInsertID(string $query, array $body)
+{
+    $pdo = pdoSqlConnect();
+    $st = $pdo->prepare($query);
+    $st->execute($body);
+    $st = null;
+    $id = $pdo->lastInsertId();
+    $pdo = null;
+    return $id;
+}
