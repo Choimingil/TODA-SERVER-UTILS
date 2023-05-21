@@ -20,6 +20,7 @@ ARG 	DB_NAME \
 WORKDIR /var/www
 RUN mkdir utils && \
 apt-get update && \
+apt-get install curl && \
 apt-get install cron && \
 apt install software-properties-common -y && \
 add-apt-repository ppa:ondrej/php -y && \
