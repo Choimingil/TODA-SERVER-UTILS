@@ -20,7 +20,7 @@ ARG 	DB_NAME \
 WORKDIR /var/www
 RUN mkdir utils && \
 apt-get update && \
-apt-get install curl && \
+apt-get install curl -y && \
 apt-get install cron && \
 apt install software-properties-common -y && \
 add-apt-repository ppa:ondrej/php -y && \
@@ -87,5 +87,5 @@ RUN crontab -l | { cat; echo "* * * * * curl -X POST http://localhost/alarm/remi
 # CMD, ENTRYPOINT의 경우 Dockerfile 내에서 단 한번만 실행
 # nginx 서버를 foreground로 돌리지 않으면 컨테이너를 background로 실행해도 컨테이너 안의 서버가 실행이 안된 상태이기 때문에 daemon off로 foreground로 계속 실행 중인 상황으로 만들기
 #CMD service php8.0-fpm start && nginx -g "daemon off;"
-ENTRYPOINT service php8.0-fpm start && nginx -g "daemon off;" && cron
+ENTRYPOINT cron && service php8.0-fpm start && nginx -g "daemon off;"
 
