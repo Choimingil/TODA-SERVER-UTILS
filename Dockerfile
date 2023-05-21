@@ -79,8 +79,7 @@ RUN	sed -i 's%;date.timezone =%date.timezone = Asia/Seoul%g' php.ini && \
 	sed -i 's/;opcache.enable=1/opcache.enable=1 opcache.jit=tracing opcache.jit_buffer_size=100M/g' php.ini
 
 #6. cron 명령어 파일 추가
-COPY root /etc/cron.d/root
-RUN chmod 0644 /etc/cron.d/root
+RUN crontab -l | { cat; echo "* * * * * curl -X POST http://localhost/alarm/remind\n* * * * * curl -X POST http://localhost/alarm/remind/aos"; } | crontab -
 
 #7. nginx & php 실행
 # 내부에 설치한 모듈은 설정 파일을 직접 실행시켜야 정상적으로 동작
