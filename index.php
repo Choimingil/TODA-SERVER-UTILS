@@ -27,8 +27,8 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/alarm/remind', ['AlarmController', 'sendRemindAlarm']);                                      //7-3. 리마인드 알림 발송 API IOS
     $r->addRoute('POST', '/alarm/remind/aos', ['AlarmController', 'sendRemindAlarmAOS']);                               //7-3-1. 리마인드 알림 발송 API AOS
     $r->addRoute('POST', '/alarm/event', ['AlarmController', 'sendEventAlarm']);                                        //7-4. 이벤트 공지 알림 발송 API
-    $r->addRoute('POST', '/alarm/ver2', ['AlarmController', 'updateAlarmVer2']);                                        //7-6. 알림 허용 여부 변경 API(3개)
-    $r->addRoute('POST', '/alarm/time', ['AlarmController', 'updateAlarmTime']);                                        //7-8. 알림 시간 변경 API
+    // $r->addRoute('POST', '/alarm/ver2', ['AlarmController', 'updateAlarmVer2']);                                        //7-6. 알림 허용 여부 변경 API(3개)
+    // $r->addRoute('POST', '/alarm/time', ['AlarmController', 'updateAlarmTime']);                                        //7-8. 알림 시간 변경 API
 
     $r->addRoute('POST', '/push/diary/send', ['PushMsgController', 'sendDiaryFriend']);                                 //12-0. 친구 초대 알림 발송
     $r->addRoute('POST', '/push/diary/accept', ['PushMsgController', 'acceptDiaryFriend']);                             //12-1. 친구 수락 알림 발송

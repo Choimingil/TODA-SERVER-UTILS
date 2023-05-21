@@ -16,10 +16,11 @@ ARG 	DB_NAME \
 	MAIL_PW \
 	FCM_TOKEN
 
-#1. 기본 세팅 & 구성요소 설치
+#1. 기본 세팅 & 구성요소 설치 + cron 설치
 WORKDIR /var/www
 RUN mkdir utils && \
 apt-get update && \
+apt-get install cron && \
 apt install software-properties-common -y && \
 add-apt-repository ppa:ondrej/php -y && \
 apt-get install nginx -y && \
@@ -77,9 +78,14 @@ RUN	sed -i 's%;date.timezone =%date.timezone = Asia/Seoul%g' php.ini && \
 	sed -i 's/;opcache.enable_cli=0/opcache.enable_cli=1/g' php.ini && \
 	sed -i 's/;opcache.enable=1/opcache.enable=1 opcache.jit=tracing opcache.jit_buffer_size=100M/g' php.ini
 
-#6. nginx & php 실행
+#6. cron 명령어 파일 추가
+COPY root /etc/cron.d/root
+RUN chmod 0644 /etc/cron.d/root
+
+#7. nginx & php 실행
 # 내부에 설치한 모듈은 설정 파일을 직접 실행시켜야 정상적으로 동작
 # CMD, ENTRYPOINT의 경우 Dockerfile 내에서 단 한번만 실행
 # nginx 서버를 foreground로 돌리지 않으면 컨테이너를 background로 실행해도 컨테이너 안의 서버가 실행이 안된 상태이기 때문에 daemon off로 foreground로 계속 실행 중인 상황으로 만들기
 #CMD service php8.0-fpm start && nginx -g "daemon off;"
-ENTRYPOINT service php8.0-fpm start && nginx -g "daemon off;"
+ENTRYPOINT service php8.0-fpm start && nginx -g "daemon off;" && cron
+

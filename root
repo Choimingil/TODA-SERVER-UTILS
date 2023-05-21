@@ -1,0 +1,2 @@
+* * * * * curl -X POST http://localhost/alarm/remind
+* * * * * curl -X POST http://localhost/alarm/remind/aos
