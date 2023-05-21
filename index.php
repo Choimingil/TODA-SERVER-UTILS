@@ -4,6 +4,7 @@ require './pdos/MailPdo.php';
 require './pdos/AlarmPdo.php';
 require './pdos/PushMsgPdo.php';
 require './function.php';
+require './env.php';
 
 require './vendor/autoload.php';
 

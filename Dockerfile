@@ -51,7 +51,7 @@ RUN	sed -i 's%DB_NAME_SAMPLE%'$DB_NAME'%g' env.php && \
 
 #4. nginx 수정
 WORKDIR /etc/nginx/sites-available
-RUN	sed -i 's%root /var/www/html;%root /var/www/'$BRANCH';%g' default && \
+RUN	sed -i 's%root /var/www/html;%root /var/www/utils;%g' default && \
 	sed -i 's%server_name _;%server_name localhost;%g' default && \
 	sed -i 's/index index.html/index index.php index.html/g' default && \
 	sed -i 's%try_files $uri $uri/ =404;%try_files $uri $uri/ /index.php?$query_string;%g' default && \
